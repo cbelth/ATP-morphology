@@ -89,7 +89,7 @@ If we then introduce a new lemma 'e', the model that ATP learned correctly infle
 'e+'
 ```
 
-Moreover, since it has seen the exception 'd' during training, it can still correctly produce it's odd suffixes too:
+Moreover, since it has seen the exception 'd' during training, it can still correctly produce its odd suffixes too:
 ```python
 >> atp.inflect('d', ('Noun',))
 'd*'

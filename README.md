@@ -57,12 +57,11 @@ The following examples assume that they are being run from the `src/` directory.
 'Kacher'
 ```
 
-### Training on new data
+### Training on New Data
 
-Suppose we have a simple language with just four known stems: 'a', 'b', 'c', and 'd.' 
+Suppose we have a simple language with just four known lemmas: 'a', 'b', 'c', and 'd,' which oddly can be inflected as either nouns or verbs.
 
-Suppose further that nouns are marked with a 
-'-' suffix and verbs with a '+' suffix, with the exception of 'd', which takes '*' as a noun and '**' as a verb.
+Let's say that nouns are marked with a '-' suffix and verbs with a '+' suffix, with the exception of 'd', which takes '*' as a noun and '**' as a verb.
 
 We can initialize the data as below,
 
@@ -82,12 +81,20 @@ and train an ATP model as before,
 >> atp = ATP(feature_space)
 >> atp.train(pairs)
 ```
-If we then introduce a new stem 'e', the model that ATP learned correctly inflects it:
+If we then introduce a new lemma 'e', the model that ATP learned correctly inflects it:
 ```python
->> atp.inflect('e', ('Noun'))
+>> atp.inflect('e', ('Noun',))
 'e-'
->> atp.inflect('e', ('Verb'))
+>> atp.inflect('e', ('Verb',))
 'e+'
+```
+
+Moreover, since it has seen the exception 'd' during training, it can still correctly produce it's odd suffixes too:
+```python
+>> atp.inflect('d', ('Noun',))
+'d*'
+>> atp.inflect('d', ('Verb',))
+'d**'
 ```
 
 ## Replicating Experiments

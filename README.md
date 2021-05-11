@@ -1,7 +1,9 @@
 # ATP-morphology
 
 _The Greedy and Recursive Search for Morphological Productivity_
+
 Caleb Belth, Sarah Payne, Deniz Beser, Jordan Kodner, Charles Yang
+
 CogSci, 2021
 
 If used, please cite:
@@ -14,7 +16,7 @@ bibtex coming soon
 ```bash
 $ git clone git@github.com:cbelth/ATP-morphology.git
 $ cd ATP-morphology
-$ pip install -r requirements.txt
+$ python setup.py
 ```
 
 To test the setup, run
@@ -26,6 +28,7 @@ $ python tester.py
 ## Example Usage
 
 ```python
+>> atp = ATP()
 ```
 
 ## Replicating Experiments

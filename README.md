@@ -1,2 +1,33 @@
 # ATP-morphology
-Code for "The Greedy and Recursive Search for Morphological Productivity"
+
+_The Greedy and Recursive Search for Morphological Productivity_
+Caleb Belth, Sarah Payne, Deniz Beser, Jordan Kodner, Charles Yang
+CogSci, 2021
+
+If used, please cite:
+```bibtex
+bibtex coming soon
+```
+
+## Setup
+
+```bash
+$ git clone git@github.com:cbelth/ATP-morphology.git
+$ cd ATP-morphology
+$ pip install -r requirements.txt
+```
+
+To test the setup, run
+```bash
+$ cd test/
+$ python tester.py
+```
+
+## Example Usage
+
+```python
+```
+
+## Replicating Experiments
+
+To replicate the experiments, see the Jupyter notebook at `notebooks/Experiments.ipynb`.

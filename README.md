@@ -1,6 +1,6 @@
 # Abduction of Tolerable Productivity
 
-_The Greedy and Recursive Search for Morphological Productivity_<br>
+_The Greedy and Recursive Search for Morphological Productivity._<br>
 <a href="https://cbelth.github.io/" target="_blank">Caleb Belth</a>,
 <a href="https://paynesa.github.io/" target="_blank">Sarah Payne</a>,
 <a href="https://www.denizbeser.org/" target="_blank">Deniz Beser</a>,
@@ -11,7 +11,12 @@ CogSci, 2021 [[Link to the paper](https://quickshift.xyz/public/assets/documents
 
 If used, please cite:
 ```bibtex
-bibtex coming soon
+@inproceedings{belth21greedy,
+  title={The Greedy and Recursive Search for Morphological Productivity.},
+  author={Belth, Caleb and Payne, Sarah and Beser, Deniz and Kodner, Jordan and Yang, Charles},
+  booktitle={CogSci},
+  year={2021}
+}
 ```
 
 ## Setup

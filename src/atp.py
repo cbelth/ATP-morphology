@@ -72,12 +72,14 @@ class ATP:
         # recursivly build the decision tree
         self.root = self.build_node(pairs, labels)
 
-    def accuracy(self, pairs):
+    def accuracy(self, pairs, no_feats=False):
         '''
         :pairs: pairs to compute accuracy over
         '''
         c, t = 0, 0
         for lemma, inflected, feats in pairs:
+            if no_feats:
+                feats = ()
             if self.inflect(lemma, feats) == inflected:
                 c += 1
             t += 1

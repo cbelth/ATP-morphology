@@ -43,16 +43,18 @@ Unless stated otherwise, the following examples assume that they are being run f
 # import code
 >> from atp import ATP
 >> from utils import load_german_CHILDES
-# load some data
->> pairs, feature_space = load_german_CHILDES()
-# initialize an ATP model
->> atp = ATP(feature_space=feature_space)
-# train ATP
->> atp.train(pairs)
+>> pairs, feature_space = load_german_CHILDES() # load some data
+>> atp = ATP(feature_space=feature_space) # initialize an ATP model
+>> atp.train(pairs) # train ATP
 >> atp.inflect('Sache', ('F',)) # ATP produces the correct inflection
 'Sachen'
 >> atp.inflect('Gleis', ('N',)) # again for a neuter noun
 'Gleise'
+```
+
+The `train()` method returns the trained model, so we can also initialize and train a model with a single line:
+```python
+atp = ATP(feature_space=feature_space).train(pairs)
 ```
 
 ### Inflect without Features
@@ -180,8 +182,7 @@ The following code will generate and open the tree for the German CHILDES data, 
 >> from atp import ATP
 >> from utils import load_german_CHILDES
 >> pairs, feature_space = load_german_CHILDES()
->> atp = ATP(feature_space=feature_space)
->> atp.train(pairs)
+>> atp = ATP(feature_space=feature_space).train(pairs)
 >> atp.plot_tree('../temp/german', open_pdf=True)
 ```
 <img src="images/german-tree.png" alt="drawing" width="600"/>

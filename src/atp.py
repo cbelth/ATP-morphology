@@ -72,6 +72,8 @@ class ATP:
         # recursivly build the decision tree
         self.root = self.build_node(pairs, labels)
 
+        return self # return the trained model
+
     def accuracy(self, pairs, no_feats=False):
         '''
         :pairs: pairs to compute accuracy over

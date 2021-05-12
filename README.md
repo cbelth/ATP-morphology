@@ -135,6 +135,26 @@ As an example, we can load one of the files for the English development data, wh
 ('pritɛnd', 'pritɛndɪŋ', ('V', 'V.PTCP', 'PRS'))
 ```
 
+The following row formats are supported:
+
+<ul>
+    <li><code>{lemma}{sep}{inflected}{sep}{features}</code></li>
+    <li><code>{lemma}{sep}{inflected}{sep}{features}{sep}{frequency}</code></li>
+    <li><code>{ignored}{sep}{lemma}{sep}{ignored}{sep}{inflected}{sep}{features}</code></li>
+    <li><code>{ignored}{sep}{lemma}{sep}{ignored}{sep}{inflected}{sep}{features}{sep}{frequency}</code></li>
+</ul>
+
+An example of each (where `sep = ' '`):
+
+<ul>
+    <li><code>sərv sərvd V;PST</code></li>
+    <li><code>sərv sərvd V;PST 2674</code></li>
+    <li><code>serve sərv served sərvd V;PST</code></li>
+    <li><code>serve sərv served sərvd V;PST 2674</code></li>
+</ul>
+
+The `{ignored}` columns can be anything and are simply skipped by `load_pairs()`.
+
 ### Visualizing a Tree
 
 #### Installing the Visulazation Library

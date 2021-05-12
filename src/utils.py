@@ -35,6 +35,9 @@ def load_pairs(path, sep='\t', feat_sep=';', preprocessing=lambda s: remove_umla
                 freq = 0
             elif len(line) == 4:
                 lemma, inflected, feats, freq = line
+            elif len(line) == 5:
+                _, lemma, _, inflected, feats = line
+                freq = 0
             elif len(line) == 6:
                 _, lemma, _, inflected, feats, freq = line
             lemma = preprocessing(lemma)

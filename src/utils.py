@@ -18,23 +18,30 @@ def load_word_to_ipa():
             word_to_ipa[word] = ipa
     return word_to_ipa
 
-def load_pairs(fname, lang, with_freq=False):
+def remove_umlauts(s):
+    return s.replace(u'ä', 'a').replace(u'ü', 'u').replace(u'ö', 'o').replace(u'Ä', 'A').replace(u'Ü', 'U').replace(u'Ö', 'O')
+
+def load_pairs(path, sep='\t', feat_sep=';', preprocessing=lambda s: remove_umlauts(s), skip_header=False, with_freq=False):
     pairs = list()
     feature_space = set()
     freqs = list()
-    with open(fname, 'r') as f:
+    with open(path, 'r') as f:
+        if skip_header:
+            next(f)
         for line in f:
-            if lang == 'german':
-                singular, plural, feats, freq = line.strip().split('\t')
-                singular = singular.replace(u'ä', 'a').replace(u'ü', 'u').replace(u'ö', 'o').replace(u'Ä', 'A').replace(u'Ü', 'U').replace(u'Ö', 'O')
-                plural = plural.replace(u'ä', 'a').replace(u'ü', 'u').replace(u'ö', 'o').replace(u'Ä', 'A').replace(u'Ü', 'U').replace(u'Ö', 'O')
-                feature_space.update(feats.split(';'))
-                pairs.append((singular, plural, tuple(feats.split(';'))))
-                freqs.append(float(freq))
-            elif lang == 'english-quant':
-                _, lemma, _, inflected, feats, _ = line.strip().split('\t')
-                feature_space.update(feats.split(';'))
-                pairs.append((lemma, inflected, tuple(feats.split(';'))))
+            line = line.strip().split(sep)
+            if len(line) == 3:
+                lemma, inflected, feats = line
+                freq = 0
+            elif len(line) == 4:
+                lemma, inflected, feats, freq = line
+            elif len(line) == 6:
+                _, lemma, _, inflected, feats, freq = line
+            lemma = preprocessing(lemma)
+            inflected = preprocessing(inflected)
+            pairs.append((lemma, inflected, tuple(feats.split(feat_sep))))
+            feature_space.update(feats.split(feat_sep))
+            freqs.append(float(freq))
     if with_freq:
         return pairs, feature_space, freqs
     return pairs, feature_space

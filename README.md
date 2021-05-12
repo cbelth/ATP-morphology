@@ -104,6 +104,37 @@ Moreover, since it has seen the exception 'd' during training, it can still corr
 'd**'
 ```
 
+### Loading Data From a File
+
+In `utils.py`, the function `load_pairs(path)` will load files of several formats.
+
+The parameter `path` should specify the path to the data that you wish to load.
+
+There are then a number of optional parameters:
+
+<ul>
+    <li><code>sep</code> is a string specifying what separates columns. By default it is tab <code>'\t'</code>.</li>
+    <li><code>feat_sep</code> is a string specifying what separates features in the feature column. By default it is semicolon <code>';'</code>.</li>
+    <li><code>preprocessing</code> is a string-to-string lambda function that allows you to add custom pre-processing to lemmas and inflections. By default, it removes umlauts.</li>
+    <li><code>skip_header</code> is a boolean, which, if <code>True</code> skips the first line of the file, treating it as a header. By default it is <code>False</code>.</li>
+    <li><code>with_freq</code> is a boolean, which, if <code>True</code>, will return frequencies for each pair (or zero) if no frequencies are given in the file. By default it is <code>False</code>.</li>
+</ul>
+
+As an example, we can load one of the files for the English development data, which is saved in orthography, but can be converted to IPA.
+
+```python
+>> from utils import load_pairs, load_word_to_ipa
+>> word_to_ipa = load_word_to_ipa() # load a dictionary of english word-to-IPA mappings
+>> pairs, features = load_pairs('../data/english/growth/child-0/100.txt', sep=' ')
+>> pairs[0]
+('pretend', 'pretending', ('V', 'V.PTCP', 'PRS'))
+>> pairs, features = load_pairs('../data/english/growth/child-0/100.txt', 
+                                sep=' ', 
+                                preprocessing=lambda s: word_to_ipa[s]) # map every lemma/inflection to its IPA
+>> pairs[0]
+('pritɛnd', 'pritɛndɪŋ', ('V', 'V.PTCP', 'PRS'))
+```
+
 ### Visualizing a Tree
 
 #### Installing the Visulazation Library
@@ -131,6 +162,36 @@ The following code will generate and open the tree for the German CHILDES data, 
 <img src="images/german-tree.png" alt="drawing" width="600"/>
 
 The optional `open_pdf` parameter, if set to `True`, will automatically open the pdf of the tree in your computer's default pdf viewer. If you do not use `open_pdf=True`, then you can navigate on your computer to the location where you saved the pdf and open it from there.
+
+### Running from Command Line
+
+Some of ATP's functionality is available from the command line by treating `atp.py` as a script.
+
+The following command will train ATP on 60 words of German and test it on one of the test sets. The resulting inflections are written—in the same order as the input file—to the specified path `../temp/german_out.txt`.
+
+```bash
+python atp.py -i ../data/german/quant/train60_0.txt -t ../data/german/quant/test_0.txt -o ../temp/german_out.txt
+```
+
+The full command-line usage is shown below. See the "Loading Data From a File" section for further details on the relevant parameters.
+
+```bash
+usage: atp.py [-h] --input INPUT [--test_path TEST_PATH] [--out_path OUT_PATH] [--sep SEP] [--feat_sep FEAT_SEP] [--skip_header SKIP_HEADER]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --input INPUT, -i INPUT
+                        A path to a dataset of training pairs.
+  --test_path TEST_PATH, -t TEST_PATH
+                        A path to a dataset of test pairs.
+  --out_path OUT_PATH, -o OUT_PATH
+                        A path to write the test results to. If None, it will print to stdout.
+  --sep SEP, -s SEP     The column seperator for the input file.
+  --feat_sep FEAT_SEP, -fs FEAT_SEP
+                        The seperator for features in the input file.
+  --skip_header SKIP_HEADER, -sh SKIP_HEADER
+                        If True, skips the first line of the input file, treating it as a header.
+```
 
 ### Importing from Other Locations
 

@@ -59,7 +59,7 @@ class TestATP(unittest.TestCase):
         for seed in range(25):
             fname = f'../data/german/quant/train{size}_{seed}.txt'
             test_path = fname.replace(f'train{size}', 'test')
-            pairs, feature_space = load_pairs(fname, 'german')
+            pairs, feature_space = load_pairs(fname)
             tp = ATP(apply_phonology=False, feature_space=feature_space)
             tp.train(pairs)
 
@@ -80,7 +80,7 @@ class TestATP(unittest.TestCase):
         for seed in range(25):
             fname = f'../data/german/quant/train{size}_{seed}.txt'
             test_path = fname.replace(f'train{size}', 'test')
-            pairs, feature_space = load_pairs(fname, 'german')
+            pairs, feature_space = load_pairs(fname)
             tp = ATP(apply_phonology=False, feature_space=feature_space)
             tp.train(pairs)
 
@@ -111,7 +111,7 @@ class TestATP(unittest.TestCase):
         for i, size in enumerate(train_sizes):
             for seed in range(num_seeds):
                 fname = f'../data/german/growth/train{size}_{seed}.txt'
-                pairs, feature_space = load_pairs(fname, 'german')
+                pairs, feature_space = load_pairs(fname)
                 tp = ATP(apply_phonology=False, feature_space=feature_space)
                 tp.train(pairs)
 
@@ -170,7 +170,7 @@ class TestATP(unittest.TestCase):
         for seed in range(10):
             fname = f'../data/english/quant/unimorph_celex0_train{size}_{seed}.txt'
             test_path = fname.replace(f"{fname.split('_')[-2]}", 'test')
-            pairs, feature_space = load_pairs(fname, 'english-quant')
+            pairs, feature_space = load_pairs(fname)
             tp = ATP(apply_phonology=False, feature_space=feature_space)
             tp.train(pairs)
 
@@ -188,7 +188,7 @@ class TestATP(unittest.TestCase):
         for seed in range(10):
             fname = f'../data/english/quant/unimorph_celex0_train{size}_{seed}.txt'
             test_path = fname.replace(f"{fname.split('_')[-2]}", 'test')
-            pairs, feature_space = load_pairs(fname, 'english-quant')
+            pairs, feature_space = load_pairs(fname)
             tp = ATP(apply_phonology=False, feature_space=feature_space)
             tp.train(pairs)
 

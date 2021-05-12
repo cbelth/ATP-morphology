@@ -1,6 +1,9 @@
+import os
+import sys
+import argparse
 from collections import defaultdict
 
-from utils import most_freq, tolerance_principle, hamming_distance
+from utils import load_pairs, most_freq, tolerance_principle, hamming_distance
 from tp_switch_statement import TPSwitchStatement
 from semantic_condition import SemanticCondition
 from phonological_condition import PhonologicalCondition
@@ -63,11 +66,22 @@ class ATP:
         # build labels
         tp = TPSwitchStatement(apply_phonology=self.apply_phonology, pairs=pairs)
         labels = list()
-        for lemma, _, fs in pairs:
-            labels.append(tp.get_case(lemma, fs).name)
+        for lemma, _, feats in pairs:
+            labels.append(tp.get_case(lemma, feats).name)
 
         # recursivly build the decision tree
         self.root = self.build_node(pairs, labels)
+
+    def accuracy(self, pairs):
+        '''
+        :pairs: pairs to compute accuracy over
+        '''
+        c, t = 0, 0
+        for lemma, inflected, feats in pairs:
+            if self.inflect(lemma, feats) == inflected:
+                c += 1
+            t += 1
+        return c / t if t > 0 else 0
 
     def guess_inflection(self, lemma, best_node):
         '''
@@ -402,6 +416,43 @@ class ATP:
         dot.render(save_path, view=False)
 
         if open_pdf:
-            import subprocess, sys
+            import subprocess
             opener = "open" if sys.platform == "darwin" else "xdg-open"
             subprocess.call([opener, f'{save_path}.pdf'])
+
+def main(args):
+    '''
+    A function for running from the command line.
+    '''
+    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+    pairs, feature_space = load_pairs(args.input, sep=args.sep, feat_sep=args.feat_sep)
+    atp = ATP(feature_space=feature_space)
+    atp.train(pairs) # train ATP
+
+    if args.test_path: # test ATP if a test path was provided
+        pairs, _ = load_pairs(args.test_path, sep=args.sep, feat_sep=args.feat_sep, skip_header=args.skip_header)
+        with open(args.out_path, 'w') if args.out_path else sys.stdout as f:
+            for lemma, _, feats in pairs:
+                f.write(f'{atp.inflect(lemma, feats)}\n')
+
+def parse_args():
+    def str2bool(v):
+        if v.lower() in ('yes', 'true', 't', 'y', '1'):
+            return True
+        elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+            return False
+        else:
+            raise argparse.ArgumentTypeError('Boolean value expected.')
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input', '-i', type=str, required=True, help="A path to a dataset of training pairs.")
+    parser.add_argument('--test_path', '-t', type=str, required=False, default=None, help="A path to a dataset of test pairs.")
+    parser.add_argument('--out_path', '-o', type=str, required=False, default=None, help="A path to write the test results to. If None, it will print to stdout.")
+    parser.add_argument('--sep', '-s', type=str, required=False, default='\t', help="The column seperator for the input file.")
+    parser.add_argument('--feat_sep', '-fs', type=str, required=False, default=';', help="The seperator for features in the input file.")
+    parser.add_argument('--skip_header', '-sh', type=str2bool, required=False, default=False, help="If True, skips the first line of the input file, treating it as a header.")
+    return parser.parse_args()
+
+if __name__ == "__main__":
+    args = parse_args()
+    main(args)

@@ -172,6 +172,24 @@ class ATP:
                 return guess, True
             return guess
 
+    def probe(self, lemma, features):
+        '''
+        Return the leaf for the node.
+
+        :lemma: the lemma to inflect
+        :features: the features specifying which inflection to produce
+        '''
+        frontier = [self.root]
+        while len(frontier) != 0:
+            node = frontier.pop()
+            if node.num_children() == 0:
+                return node
+            else:
+                for child_branch_condition, child in node.get_children():
+                    pos, condition = child_branch_condition
+                    if (pos and condition.applies(lemma, features)) or (not pos and not condition.applies(lemma, features)):
+                        frontier.append(child)
+
     def get_leaves(self):
         '''
         :return: the leaf nodes of the tree.

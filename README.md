@@ -152,10 +152,10 @@ The following row formats are supported:
 An example of each (where `sep = ' '`):
 
 <ul>
-    <li><code>sərv sərvd V;PST</code></li>
-    <li><code>sərv sərvd V;PST 2674</code></li>
-    <li><code>serve sərv served sərvd V;PST</code></li>
-    <li><code>serve sərv served sərvd V;PST 2674</code></li>
+    <li><code>kɔz kɔzd V;PST</code></li>
+    <li><code>kɔz kɔzd V;PST 3074</code></li>
+    <li><code>cause kɔz caused kɔzd V;PST</code></li>
+    <li><code>cause kɔz caused kɔzd V;PST 3074</code></li>
 </ul>
 
 The `{ignored}` columns can be anything and are simply skipped by `load_pairs()`.

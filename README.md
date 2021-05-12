@@ -1,8 +1,13 @@
 # Abduction of Tolerable Productivity
 
 _The Greedy and Recursive Search for Morphological Productivity_<br>
-Caleb Belth, Sarah Payne, Deniz Beser, Jordan Kodner, Charles Yang<br>
-CogSci, 2021
+<a href="https://cbelth.github.io/" target="_blank">Caleb Belth</a>,
+<a href="https://paynesa.github.io/" target="_blank">Sarah Payne</a>,
+<a href="https://www.denizbeser.org/" target="_blank">Deniz Beser</a>,
+<a href="https://jkodner05.github.io/" target="_blank">Jordan Kodner</a>,
+<a href="https://www.ling.upenn.edu/~ycharles/" target="_blank">Charles Yang</a>
+<br>
+CogSci, 2021 [[Link to the paper](https://quickshift.xyz/public/assets/documents/belth-2021-CogSci-ATP.pdf)]
 
 If used, please cite:
 ```bibtex
@@ -59,6 +64,8 @@ Unless stated otherwise, the following examples assume that they are being run f
 
 ### Training on New Data
 
+Running ATP on new data is simple! All you need to do is create a list of tuples. Each tuple is an instance, and should be ordered `(lemma, inflection, features)`. The `lemma`, and `inflection` should be strings, and `features` a tuple of features, each of which should be included in the `feature_space`. Let's look at an example.
+
 Suppose we have a simple language with just four known lemmas: 'a', 'b', 'c', and 'd,' which oddly can be inflected as either nouns or verbs.
 
 Let's say that nouns are marked with a '-' suffix and verbs with a '+' suffix, with the exception of 'd', which takes '*' as a noun and '**' as a verb.
@@ -109,7 +116,7 @@ This setup is optional if you do not wish to view any trees.
 
 ATP constructs a decision tree. These can be automatically generated using the `plot_tree(save_path)` method of ATP.
 The tree can be written, as a pdf, to any location. The setup script automatically created a `temp/` directory that
-is not checked into git that can be used for this purpose.
+is not checked into git and can be used for this purpose.
 
 The following code will generate and open the tree for the German CHILDES data, or Figure 4 in the paper.
 
@@ -122,12 +129,6 @@ The following code will generate and open the tree for the German CHILDES data, 
 >> atp.plot_tree('../temp/german', open_pdf=True)
 ```
 <img src="images/german-tree.png" alt="drawing" width="600"/>
-<!-- ![Drag Racing](images/german-tree.png) -->
-<!-- <object data="temp/german.pdf" type="application/pdf" width="700px" height="700px">
-    <!-- <embed src="http://yoursite.com/the.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
-    </embed> -->
-<!-- </object> - -->
 
 The optional `open_pdf` parameter, if set to `True`, will automatically open the pdf of the tree in your computer's default pdf viewer. If you do not use `open_pdf=True`, then you can navigate on your computer to the location where you saved the pdf and open it from there.
 
@@ -144,3 +145,7 @@ To import from a location other than `src/`, do the following first:
 ## Replicating Experiments
 
 To replicate the experiments, see the Jupyter notebook at `notebooks/Experiments.ipynb`.
+
+## Contact
+
+If you have questions, comments, or feedback, please email Caleb Belth at cbelth@umich.edu.

@@ -348,7 +348,7 @@ class ATP:
         splits_labels = {X_name: X_labels, Y_name: Y_labels}
         return split_feature, splits, splits_labels
 
-    def plot_tree(self, save_path):
+    def plot_tree(self, save_path, open_pdf=False):
         '''
         A function to plot the decision tree.
 
@@ -400,3 +400,8 @@ class ATP:
             dot.edge(edge[0], edge[2], label=f' {edge[1]}')
         
         dot.render(save_path, view=False)
+
+        if open_pdf:
+            import subprocess, sys
+            opener = "open" if sys.platform == "darwin" else "xdg-open"
+            subprocess.call([opener, f'{save_path}.pdf'])
